@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guessing Game!</title>
+    <script>
+    let answer;
+
+    function load() {
+        // Prepare the random number
+        answer = parseInt(Math.random() * 100) + 1;
+    }
+    function start() {
+        // Switch the display from the 'title screen' to the 'main screen'
+        document.getElementById("title").style.display = "none";
+        document.getElementById("main").style.display = "block";
+    }
+
+    function guess() {
+        // Find the previous guess and return if
+        // the previous guess is already correct
+        let last_guess = parseInt(document.getElementById("guess").innerHTML);
+        // Ask for the guess from the user
+        if(last_guess == answer){
+            return false;
+        }
+        let user_guess = prompt("Please input your guess!:", last_guess);
+        // Check the guess with the lab logic
+        //   Case 1: not a number
+        if(isNaN(user_guess)){
+            document.getElementById("hint").innerHTML = "Please input a number!";
+            return false;
+        }
+        //   Case 2: not an integer
+        if(parseInt(user_guess) != parseFloat(user_guess)){
+            document.getElementById("hint").innerHTML = "Please input a integer!";
+            return false;
+        }
+        //   Case 3: not within the valid range
+        if(user_guess < 1 || user_guess > 100){
+            document.getElementById("hint").innerHTML = "Please input a integer between 1 and 100 (inclusive)!";
+            return false;
+        }
+        //   Case 4: the guess is too small
+        if(user_guess < answer){
+            document.getElementById("hint").innerHTML = "Too small!";
+            return false;
+        }
+        //   Case 5: the guess is too big
+        if(user_guess > answer){
+            document.getElementById("hint").innerHTML = "Too big!";
+            return false;
+        }
+        //   Case 6: the guess is correct
+        if(user_guess == answer){
+            document.getElementById("hint").innerHTML = "Correct!";
+            return true;
+        }
+        document.getElementById("guess").innerHTML = user_guess;
+        return false;
+    }
+    </script>
+    <style>
+    /* This is the style of the body element */
+    body {
+        font-family: Georgia, serif;
+        background: black url(smoke.png);
+        background-size: 100% 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Set up the style of the boxes of the two screens */
+    .box {
+        border: 5px solid black;
+        height: 90vh;
+        width: 90vw;
+        margin: 5vh 5vw;
+        font-size: 5vh;
+        box-sizing: border-box;
+        text-align: center;
+        padding-top: 25vh;
+    }
+    /* Set up the style for the title screen */
+    #title {
+        background: rgba(0,0,0);
+        opacity: 0.8;
+        color: gray;
+        text-transform: uppercase;
+    }
+    
+    #title2 {
+        font-size: 200%;
+    }
+    /* Set up the style for the p and big */
+    p {
+        margin: 0;
+    }
+    big {
+        font-size: 150%;
+    }
+    /* Set up the style for the title and subtitle */
+    #subtitle {
+        font-size: 50%;
+        margin-left:50%;
+        text-align: left;
+    }
+    /* Set up the style for the main screen */
+
+    /* Set up the style for 'button' */
+    #button {
+        display: block;
+        border: 3px solid black;
+        background-color: gray;
+        border-radius: 10px;
+        color: black;
+        height: 8vh;
+        width: 30vw;
+        font-size: 50%;
+        margin: 20px auto;
+        text-decoration: none;
+        line-height: 8vh;
+    }
+    /* Set up the style for hint */
+    #hint {
+        font-size: 80%;
+        color: red;
+    }
+    </style>
+</head>
+<body onload="load()">
+    <!-- the title screen -->
+    <div class="box" id="title" onclick="start()">
+        <p id="title1">Fantastic</p>
+        <p id="title2">Number</p>
+        <p id="subtitle">that <big>You Need</big><br>
+            to <big>Guess</big></p>
+    </div>
+
+    <!-- the game screen -->
+    <div class="box" id="main" style="display: none;">
+        <p>Your Guess: <span id="guess">-</span></p>
+        <a id="button" href="#" onclick="guess()">Enter Your Guess</a>
+        <p id="hint">Press the button to start the guess!</p>
+    </div>
+</body>
+</html>
