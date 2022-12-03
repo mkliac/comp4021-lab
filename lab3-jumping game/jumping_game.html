@@ -19,7 +19,7 @@
 
 
     #cloud1 {
-        animation: cloud-animation;
+        animation: none;
         animation-duration: 10s;
         animation-iteration-count: infinite;
         animation-timing-function:linear; 
@@ -150,6 +150,12 @@
 
         // Start the game over checking
         setTimeout(checkGameover, 100);
+
+        $("#cloud1").css("animation-name", "cloud-animation");
+        setTimeout(()=>{
+            $("cloud2").show();
+            $("#cloud2").css("animation-name", "cloud-animation");
+        }, 5000);
     });
 
     </script>
